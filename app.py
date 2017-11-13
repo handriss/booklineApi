@@ -13,9 +13,10 @@ def index():
 
     if request.json:
         book_data = request.json
-        print(minimum_price_service.build_url(book_data.get("author"), book_data.get("title")))
+        target_url = minimum_price_service.build_url(book_data.get("author"), book_data.get("title"))
+        minimum_price_service.send_request(target_url)
         return 'cica'
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

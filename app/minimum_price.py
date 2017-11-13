@@ -1,5 +1,6 @@
 import urllib.parse as urlparse
 from urllib.parse import urlencode
+import urllib3
 
 
 class MinimumPriceService:
@@ -11,7 +12,7 @@ class MinimumPriceService:
     }
 
     def __init__(self):
-        pass
+        self.http = urllib3.PoolManager()
 
     def build_url(self, author, title):
         current_params = self.params
@@ -23,5 +24,11 @@ class MinimumPriceService:
 
         url_parts[4] = urlencode(query)
 
-        print(urlparse.urlunparse(url_parts))
+        return urlparse.urlunparse(url_parts)
+
+    def send_request(self, target_url):
+        response = self.http.request('GET', target_url)
+        print(response.data)
+
+
 
