@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 from app.minimum_price import MinimumPriceService
 from app.validator import ValidatorService
@@ -14,8 +14,14 @@ def index():
     if request.json:
         book_data = request.json
         target_url = minimum_price_service.build_url(book_data.get("author"), book_data.get("title"))
-        minimum_price_service.send_request(target_url)
-        return 'cica'
+        minimum_price = minimum_price_service.send_request(target_url)
+
+        response = {
+            'author': book_data.get('author'),
+            'title': book_data.get('title'),
+            'minimumPrice': minimum_price
+        }
+        return jsonify(response)
 
 
 if __name__ == '__main__':
