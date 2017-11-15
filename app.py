@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 
-from app.minimum_price import MinimumPriceService
-from app.validator import ValidatorService
+from service.minimum_price import MinimumPriceService
+from service.validator import ValidatorService
 
 app = Flask(__name__)
 minimum_price_service = MinimumPriceService()
