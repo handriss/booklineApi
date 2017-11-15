@@ -8,14 +8,6 @@ minimum_price_service = MinimumPriceService()
 validator_service = ValidatorService()
 
 
-@app.route("/", methods=['GET'])
-def get_index():
-    response = {
-        'message': 'Method not allowed.'
-    }
-    return jsonify(response)
-
-
 @app.route("/healthcheck", methods=['GET'])
 def get_index():
     response = {
