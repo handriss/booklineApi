@@ -21,25 +21,30 @@ def index():
 
     if request.json:
         book_data = request.json
-        target_url = minimum_price_service.build_url(book_data.get("author"), book_data.get("title"))
-        minimum_price = minimum_price_service.send_request(target_url)
 
-        response = {
-            'requestData': {
-                'author': book_data.get('author'),
-                'title': book_data.get('title'),
-            },
-            'responseData': {
-                'minimumPrice': minimum_price
+        if not validator_service.validate(book_data):
+            response = {
+                'message': 'Invalid request'
             }
+        else:
+            target_url = minimum_price_service.build_url(book_data.get("author"), book_data.get("title"))
+            minimum_price = minimum_price_service.send_request(target_url)
+
+            response = {
+                'requestData': {
+                    'author': book_data.get('author'),
+                    'title': book_data.get('title'),
+                },
+                'responseData': {
+                    'minimumPrice': minimum_price
+                }
         }
-        return jsonify(response)
     else:
         response = {
             'message': 'Content-type should be in JSON'
         }
-        return jsonify(response)
+    return jsonify(response)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
