@@ -25,9 +25,18 @@ def index():
         minimum_price = minimum_price_service.send_request(target_url)
 
         response = {
-            'author': book_data.get('author'),
-            'title': book_data.get('title'),
-            'minimumPrice': minimum_price
+            'requestData': {
+                'author': book_data.get('author'),
+                'title': book_data.get('title'),
+            },
+            'responseData': {
+                'minimumPrice': minimum_price
+            }
+        }
+        return jsonify(response)
+    else:
+        response = {
+            'message': 'Content-type should be in JSON'
         }
         return jsonify(response)
 
