@@ -15,6 +15,10 @@ def get_index():
     }
     return jsonify(response)
 
+@app.route("/example", methods=['GET'])
+def get_example():
+    response = {'example': 'is working'}
+    return jsonify(response)
 
 @app.route("/", methods=['POST'])
 def index():
